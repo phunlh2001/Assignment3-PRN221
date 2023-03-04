@@ -11,7 +11,7 @@ namespace Assignment3.Migrations
                 name: "AppUsers",
                 columns: table => new
                 {
-                    UserID = table.Column<int>(type: "int", nullable: false)
+                    AuthorID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     FullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -20,7 +20,7 @@ namespace Assignment3.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AppUsers", x => x.UserID);
+                    table.PrimaryKey("PK_AppUsers", x => x.AuthorID);
                 });
 
             migrationBuilder.CreateTable(
@@ -41,23 +41,24 @@ namespace Assignment3.Migrations
                 name: "Posts",
                 columns: table => new
                 {
-                    PostID = table.Column<int>(type: "int", nullable: false),
+                    PostID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     AuthorID = table.Column<int>(type: "int", nullable: false),
                     CategoryID = table.Column<int>(type: "int", nullable: false),
                     created_date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     updated_date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    content = table.Column<string>(name: "[content]", type: "nvarchar(max)", nullable: true),
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PublishStatus = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Posts", x => new { x.PostID, x.AuthorID, x.CategoryID });
+                    table.PrimaryKey("PK_Posts", x => x.PostID);
                     table.ForeignKey(
                         name: "FK_Posts_AppUsers_AuthorID",
                         column: x => x.AuthorID,
                         principalTable: "AppUsers",
-                        principalColumn: "UserID",
+                        principalColumn: "AuthorID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Posts_PostCategories_CategoryID",

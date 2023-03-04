@@ -21,9 +21,10 @@ namespace Assignment3.Migrations
 
             modelBuilder.Entity("Assignment3.Models.AppUser", b =>
                 {
-                    b.Property<int>("UserID")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
+                        .HasColumnName("AuthorID")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Address")
@@ -38,15 +39,18 @@ namespace Assignment3.Migrations
                     b.Property<string>("Password")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("UserID");
+                    b.HasKey("ID");
 
                     b.ToTable("AppUsers");
                 });
 
             modelBuilder.Entity("Assignment3.Models.Post", b =>
                 {
-                    b.Property<int>("PostID")
-                        .HasColumnType("int");
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("PostID")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("AuthorID")
                         .HasColumnType("int");
@@ -55,8 +59,7 @@ namespace Assignment3.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Content")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("[content]");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2")
@@ -72,7 +75,7 @@ namespace Assignment3.Migrations
                         .HasColumnType("datetime2")
                         .HasColumnName("updated_date");
 
-                    b.HasKey("PostID", "AuthorID", "CategoryID");
+                    b.HasKey("ID");
 
                     b.HasIndex("AuthorID");
 
@@ -86,6 +89,7 @@ namespace Assignment3.Migrations
                     b.Property<int>("CategoryID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
+                        .HasColumnName("CategoryID")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("CategoryName")
