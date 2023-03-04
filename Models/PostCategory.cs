@@ -6,9 +6,8 @@ namespace Assignment3.Models
 {
     public class PostCategory
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int CategoryID { get; set; }
+        [Column("CategoryID")]
+        [Key] public int CategoryID { get; set; }
         public string CategoryName { get; set; }
         public string Description { get; set; }
 

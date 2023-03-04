@@ -6,9 +6,8 @@ namespace Assignment3.Models
 {
     public class AppUser
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int UserID { get; set; }
+        [Column("AuthorID")]
+        [Key] public int ID { get; set; }
         public string FullName { get; set; }
         public string Address { get; set; }
         public string Email { get; set; }
