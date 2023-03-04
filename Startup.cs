@@ -1,3 +1,4 @@
+using Assignment3.Hubs;
 using Assignment3.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -56,7 +57,7 @@ namespace Assignment3
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-                //endpoints.Map
+                endpoints.MapHub<SignalrServer>("/signalrServer");
             });
         }
     }
