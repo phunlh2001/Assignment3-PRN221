@@ -14,14 +14,6 @@ namespace Assignment3.Models
             modelBuilder.Entity<Post>().ToTable("Posts");
             modelBuilder.Entity<PostCategory>().ToTable("PostCategories");
             modelBuilder.Entity<AppUser>().ToTable("AppUsers");
-
-            // Configuration primary keys for weak entity
-            modelBuilder.Entity<Post>().HasKey(key => new
-            {
-                key.PostID,
-                key.AuthorID,
-                key.CategoryID
-            });
         }
 
         public virtual DbSet<Post> Posts { get; set; }
