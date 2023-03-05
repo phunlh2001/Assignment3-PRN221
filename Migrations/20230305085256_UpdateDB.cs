@@ -7,18 +7,14 @@ namespace Assignment3.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AlterColumn<DateTime>(
+            migrationBuilder.DropColumn(
+                name: "created_date",
+                table: "Posts");
+
+            migrationBuilder.AlterColumn<string>(
                 name: "updated_date",
                 table: "Posts",
-                type: "datetime2",
-                nullable: true,
-                oldClrType: typeof(DateTime),
-                oldType: "datetime2");
-
-            migrationBuilder.AlterColumn<DateTime>(
-                name: "created_date",
-                table: "Posts",
-                type: "datetime2",
+                type: "nvarchar(max)",
                 nullable: true,
                 oldClrType: typeof(DateTime),
                 oldType: "datetime2");
@@ -69,13 +65,13 @@ namespace Assignment3.Migrations
 
             migrationBuilder.InsertData(
                 table: "Posts",
-                columns: new[] { "PostID", "AuthorID", "CategoryID", "Content", "created_date", "PublishStatus", "Title", "updated_date" },
+                columns: new[] { "PostID", "AuthorID", "CategoryID", "Content", "PublishStatus", "Title", "updated_date" },
                 values: new object[,]
                 {
-                    { 4, 1, 1, null, new DateTime(2023, 3, 5, 14, 40, 16, 952, DateTimeKind.Local).AddTicks(1351), 0, "The Story Of Studying Abroad", new DateTime(2023, 3, 5, 14, 40, 16, 952, DateTimeKind.Local).AddTicks(1353) },
-                    { 2, 1, 2, null, new DateTime(2023, 3, 5, 14, 40, 16, 952, DateTimeKind.Local).AddTicks(1333), 0, "50 Good Dishes For Breakfast", new DateTime(2023, 3, 5, 14, 40, 16, 952, DateTimeKind.Local).AddTicks(1342) },
-                    { 3, 1, 3, null, new DateTime(2023, 3, 5, 14, 40, 16, 952, DateTimeKind.Local).AddTicks(1347), 0, "NASA And The Great Scientific Work", new DateTime(2023, 3, 5, 14, 40, 16, 952, DateTimeKind.Local).AddTicks(1348) },
-                    { 1, 1, 4, null, new DateTime(2023, 3, 5, 14, 40, 16, 950, DateTimeKind.Local).AddTicks(8510), 0, "OOP Concepts in C#", new DateTime(2023, 3, 5, 14, 40, 16, 951, DateTimeKind.Local).AddTicks(8927) }
+                    { 4, 1, 1, null, 0, "The Story Of Studying Abroad", "05/03/2023" },
+                    { 2, 1, 2, null, 0, "50 Good Dishes For Breakfast", "05/03/2023" },
+                    { 3, 1, 3, null, 0, "NASA And The Great Scientific Work", "05/03/2023" },
+                    { 1, 1, 4, null, 0, "OOP Concepts in C#", "05/03/2023" }
                 });
         }
 
@@ -132,18 +128,8 @@ namespace Assignment3.Migrations
                 type: "datetime2",
                 nullable: false,
                 defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                oldClrType: typeof(DateTime),
-                oldType: "datetime2",
-                oldNullable: true);
-
-            migrationBuilder.AlterColumn<DateTime>(
-                name: "created_date",
-                table: "Posts",
-                type: "datetime2",
-                nullable: false,
-                defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                oldClrType: typeof(DateTime),
-                oldType: "datetime2",
+                oldClrType: typeof(string),
+                oldType: "nvarchar(max)",
                 oldNullable: true);
 
             migrationBuilder.AlterColumn<string>(
@@ -163,6 +149,13 @@ namespace Assignment3.Migrations
                 oldClrType: typeof(int),
                 oldType: "int",
                 oldNullable: true);
+
+            migrationBuilder.AddColumn<DateTime>(
+                name: "created_date",
+                table: "Posts",
+                type: "datetime2",
+                nullable: false,
+                defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
 
             migrationBuilder.AlterColumn<string>(
                 name: "Description",
