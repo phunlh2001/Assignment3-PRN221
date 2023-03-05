@@ -14,7 +14,7 @@ namespace Assignment3.Models
         [Column("created_date")]
         public DateTime? CreatedDate { get; init; } = DateTime.Now;
         [Column("updated_date")]
-        public DateTime? UpdatedDate { get; private set; } = DateTime.Now;
+        public DateTime? UpdatedDate { get; set; } = DateTime.Now;
 
         [Required(ErrorMessage = "Title must be not empty!")]
         public string Title { get; set; }
