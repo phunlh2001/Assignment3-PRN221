@@ -8,6 +8,8 @@
         LoadData();
     })
 
+    LoadData();
+
     function LoadData() {
         let tr = "";
 
@@ -18,15 +20,13 @@
                 $.each(result, (k, v) => {
                     tr += `<tr>
                                <td>${v.Title}</td>
-                               <td>${v.Content}</td>
-                               <td>${v.PublishStatus}</td>
-                               <td>${v.PostCategory}</td>
-                               <td>${v.Author}</td>
+                               <td>${v.content}</td>
+                               <td>${v.postCategory}</td>
 
                                <td>
-                                   <a href='../Posts/Edit?id=${v.PostID}'>Edit</a> | 
-                                   <a href='../Posts/Details?id=${v.PostID}'>Details</a> | 
-                                   <a href='../Posts/Delete?id=${v.PostID}'>Delete</a>
+                                   <a href='../Posts/Edit?id=${v.id}'>Edit</a> | 
+                                   <a href='../Posts/Details?id=${v.id}'>Details</a> | 
+                                   <a href='../Posts/Delete?id=${v.id}'>Delete</a>
                                </td>
                            </tr>`;
                 });
