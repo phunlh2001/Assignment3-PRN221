@@ -7,8 +7,9 @@ namespace Assignment3.Models
     public class PostCategory
     {
         [Column("CategoryID")]
-        [Key] public int CategoryID { get; set; }
+        [Key] public int ID { get; set; }
         public string CategoryName { get; set; }
+        [Required(ErrorMessage = "Category description must be not empty!")]
         public string Description { get; set; }
 
         [ForeignKey("CategoryID")]
