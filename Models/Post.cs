@@ -12,9 +12,15 @@ namespace Assignment3.Models
         public int CategoryID { get; set; }
 
         [Column("created_date")]
-        public DateTime? CreatedDate { get; init; } = DateTime.Now;
+        public string CreatedDate
+        {
+            get
+            {
+                return DateTime.Now.ToString("dd/MM/yyyy");
+            }
+        }
         [Column("updated_date")]
-        public DateTime? UpdatedDate { get; set; } = DateTime.Now;
+        public string UpdatedDate { get; set; } = DateTime.Now.ToString("dd/MM/yyyy");
 
         [Required(ErrorMessage = "Title must be not empty!")]
         public string Title { get; set; }
