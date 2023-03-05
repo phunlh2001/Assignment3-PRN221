@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Assignment3.Extentions;
+using Microsoft.EntityFrameworkCore;
 
 namespace Assignment3.Models
 {
@@ -14,6 +15,9 @@ namespace Assignment3.Models
             modelBuilder.Entity<Post>().ToTable("Posts");
             modelBuilder.Entity<PostCategory>().ToTable("PostCategories");
             modelBuilder.Entity<AppUser>().ToTable("AppUsers");
+
+            // Seed datas
+            modelBuilder.Seed();
         }
 
         public virtual DbSet<Post> Posts { get; set; }
