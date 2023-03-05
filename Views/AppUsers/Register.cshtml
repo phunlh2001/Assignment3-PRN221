@@ -1,0 +1,26 @@
+﻿@model Assignment3.Models.AppUser
+@{
+    ViewData["Title"] = "Register";
+}
+
+<h2>Register Account</h2>
+
+<span class="text-danger">@ViewBag.error</span> <br />
+
+<form asp-action="Register" method="post" class="w-25">
+    Email: <input class="form-control" type="email" asp-for="Email" />
+    <span class="text-danger" asp-validation-for="Email"></span> <br />
+    
+    Your Name: <input class="form-control" type="text" asp-for="FullName" />
+    <span class="text-danger" asp-validation-for="FullName"></span> <br />
+
+    Address: <input class="form-control" type="text" asp-for="Address" />
+    <span class="text-danger" asp-validation-for="Address"></span> <br />
+
+    Password: <input class="form-control" type="password" asp-for="Password" />
+    <span class="text-danger" asp-validation-for="Password"></span> <br />
+
+    Confirm Password: <input class="form-control" type="password" name="cPwd" /> <br/>
+
+    <input type="submit" value="Register" class="btn btn-success" />
+</form>

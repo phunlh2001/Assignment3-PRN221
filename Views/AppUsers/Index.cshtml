@@ -1,0 +1,36 @@
+﻿@model IEnumerable<Assignment3.Models.AppUser>
+@{
+    ViewData["Title"] = "Users";
+    int count = 1;
+}
+
+<h2 class="text-center">AppUsers Management</h2>
+<hr />
+<table class="table">
+    <thead class="table thead-light table-bordered">
+        <tr>
+            <th>No.</th>
+            <th scope="col">Email</th>
+            <th scope="col">FullName</th>
+            <th scope="col">Address</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            @if (item.Email == "admin@gmail.com") {
+                continue;
+            }
+            <tr>
+                <td>@count</td>
+                <td>@item.Email</td>
+                <td>@item.FullName</td>
+                <td>@item.Address</td>
+                @*<td>
+                    <a asp-controller="AppUsers" asp-action="Details" asp-route-Id="@item.ID" class="btn btn-outline-info">View Detail</a>
+                </td>*@
+            </tr>
+            count++;
+        }
+    </tbody>
+</table>
