@@ -1,49 +1,89 @@
 ﻿@model IEnumerable<Assignment3.Models.Post>
+@using Microsoft.AspNetCore.Http;
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor;
 
 @{
     ViewData["Title"] = "Index";
+
+    var user = @HttpContextAccessor.HttpContext.Session.GetString("userEmail");
 }
 
-<h1>Index</h1>
+<h1>List Post</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>Start</th>
-            <th>Modify</th>
-            <th>Title</th>
-            <th>Content</th>
-            <th>Publish</th>
-            <th>Category</th>
-            <th>Author</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody id="tableBody">
-@foreach (var item in Model) {
-        <tr>
-            <td>@item.CreatedDate</td>
-            <td>@item.UpdatedDate</td>
-            <td>@item.Title</td>
-            <td>@item.Content</td>
-            <td>@item.PublishStatus</td>
-            <td>@item.PostCategory.CategoryName</td>
-            <td>@item.Author.FullName</td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-success">
-                    <i class="fa fa-pen"></i>
-                </a>
-                <a asp-action="Details" asp-route-id="@item.ID" class="btn btn-secondary">
-                    <i class="fa fa-eye"></i>
-                </a>
-                <a asp-action="Delete" asp-route-id="@item.ID" class="btn btn-danger">
-                    <i class="fa fa-trash"></i>
-                </a>
-            </td>
-        </tr>
+@if (user != null)
+{
+    <p>
+        <a asp-action="Create" class="btn btn-primary">
+            Create
+            <i class="fa fa-plus"></i>
+        </a>
+    </p>
 }
-    </tbody>
-</table>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <aside>
+                <div class="nav-shopping">
+                    <hr style="width:80%;text-align:left;margin-left:0;border-style:dotted;">
+                    <ul>
+                        <li style="list-style-type: none;">
+                            <a asp-controller="Search">Search</a>
+                        </li>
+                        <hr style="width:75%;text-align:left;margin-left:0;border-style:dotted;" />
+                    </ul>
+                </div>
+                @if (user != null && user == "admin@gmail.com")
+                {
+                    <div class="nav-admin">
+                        <ul>
+                            <li style="list-style-type: none;">
+                                <a asp-controller="AppUsers">Users</a>
+                            </li>
+                            <hr style="width:75%;text-align:left;margin-left:0;border-style:dotted;" />
+                        </ul>
+                    </div>
+                }
+            </aside>
+        </div>
+        <div class="col-md-9">
+            <table class="table table-bordered">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Title</th>
+                        <th>Content</th>
+                        <th>Category</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.Title</td>
+                            <td>@item.Content</td>
+                            <td>@item.PostCategory.CategoryName</td>
+                            <td>
+                                <a asp-action="Details" asp-route-id="@item.ID" class="btn btn-secondary">
+                                    <i class="fa fa-eye"></i>
+                                </a>
+                                @if (user != null)
+                                {
+                                    @if (user == "admin@gmail.com")
+                                    {
+                                        <a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-success">
+                                            <i class="fa fa-pen"></i>
+                                        </a>
+                                        <a asp-action="Delete" asp-route-id="@item.ID" class="btn btn-danger">
+                                            <i class="fa fa-trash"></i>
+                                        </a>
+                                    }
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
