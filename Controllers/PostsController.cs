@@ -1,21 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Assignment3.Hubs;
+using Assignment3.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
-using Assignment3.Models;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Assignment3.Controllers
 {
     public class PostsController : Controller
     {
         private readonly ApplicationDbContext _context;
-
-        public PostsController(ApplicationDbContext context)
+        private readonly IHubContext<SignalrServer> _signalrHub;
+        public PostsController(ApplicationDbContext context, IHubContext<SignalrServer> signalrHub)
         {
             _context = context;
+            _signalrHub = signalrHub;
         }
 
         // GET: Posts
@@ -23,6 +24,12 @@ namespace Assignment3.Controllers
         {
             var applicationDbContext = _context.Posts.Include(p => p.Author).Include(p => p.PostCategory);
             return View(await applicationDbContext.ToListAsync());
+        }
+
+        public IActionResult GetPosts()
+        {
+            var res = _context.Posts.ToList();
+            return Ok(res);
         }
 
         // GET: Posts/Details/5
@@ -48,8 +55,8 @@ namespace Assignment3.Controllers
         // GET: Posts/Create
         public IActionResult Create()
         {
-            ViewData["AuthorID"] = new SelectList(_context.AppUsers, "ID", "ID");
-            ViewData["CategoryID"] = new SelectList(_context.PostCategories, "CategoryID", "CategoryID");
+            ViewData["AuthorID"] = new SelectList(_context.AppUsers, "ID", "FullName");
+            ViewData["CategoryID"] = new SelectList(_context.PostCategories, "ID", "CategoryName");
             return View();
         }
 
@@ -64,10 +71,11 @@ namespace Assignment3.Controllers
             {
                 _context.Add(post);
                 await _context.SaveChangesAsync();
+                await _signalrHub.Clients.All.SendAsync("LoadPosts");
                 return RedirectToAction(nameof(Index));
             }
             ViewData["AuthorID"] = new SelectList(_context.AppUsers, "ID", "ID", post.AuthorID);
-            ViewData["CategoryID"] = new SelectList(_context.PostCategories, "CategoryID", "CategoryID", post.CategoryID);
+            ViewData["CategoryID"] = new SelectList(_context.PostCategories, "ID", "Description", post.CategoryID);
             return View(post);
         }
 
@@ -84,8 +92,8 @@ namespace Assignment3.Controllers
             {
                 return NotFound();
             }
-            ViewData["AuthorID"] = new SelectList(_context.AppUsers, "ID", "ID", post.AuthorID);
-            ViewData["CategoryID"] = new SelectList(_context.PostCategories, "CategoryID", "CategoryID", post.CategoryID);
+            ViewData["AuthorID"] = new SelectList(_context.AppUsers, "ID", "FullName", post.AuthorID);
+            ViewData["CategoryID"] = new SelectList(_context.PostCategories, "ID", "CategoryName", post.CategoryID);
             return View(post);
         }
 
@@ -107,6 +115,7 @@ namespace Assignment3.Controllers
                 {
                     _context.Update(post);
                     await _context.SaveChangesAsync();
+                    await _signalrHub.Clients.All.SendAsync("LoadPosts");
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -122,7 +131,7 @@ namespace Assignment3.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["AuthorID"] = new SelectList(_context.AppUsers, "ID", "ID", post.AuthorID);
-            ViewData["CategoryID"] = new SelectList(_context.PostCategories, "CategoryID", "CategoryID", post.CategoryID);
+            ViewData["CategoryID"] = new SelectList(_context.PostCategories, "ID", "Description", post.CategoryID);
             return View(post);
         }
 
@@ -154,6 +163,7 @@ namespace Assignment3.Controllers
             var post = await _context.Posts.FindAsync(id);
             _context.Posts.Remove(post);
             await _context.SaveChangesAsync();
+            await _signalrHub.Clients.All.SendAsync("LoadPosts");
             return RedirectToAction(nameof(Index));
         }
 
