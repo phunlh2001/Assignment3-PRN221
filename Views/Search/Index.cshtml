@@ -1,0 +1,33 @@
+﻿@{
+    ViewData["Title"] = "Search";
+}
+
+<label>Search Box:</label>
+<div class="input-group mb-3">
+    <input type="text" class="form-control" placeholder="Input title, description..." />
+    <div class="input-group-append">
+        <button class="btn btn-primary" type="button" onclick="handleClick()">
+            <i class="fas fa-search"></i>
+        </button>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function handleClick() {
+            let value = $("input").val();
+            let tr = ""
+            $.ajax({
+                type: "POST",
+                url: "/Search/GetData",
+                data: { txt: value },
+                success: (res) => {
+                    console.log(res);
+                },
+                error: (err) => {
+                    console.log(err)
+                }
+            })
+        }
+    </script>
+}
