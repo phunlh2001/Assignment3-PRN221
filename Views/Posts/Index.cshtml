@@ -55,33 +55,7 @@
                         <th></th>
                     </tr>
                 </thead>
-                <tbody id="tableBody">
-                    @*@foreach (var item in Model)
-                    {
-                        <tr>
-                            <td>@item.Title</td>
-                            <td>@item.Content</td>
-                            <td>@item.PostCategory.CategoryName</td>
-                            <td>
-                                <a asp-action="Details" asp-route-id="@item.ID" class="btn btn-secondary">
-                                    <i class="fa fa-eye"></i>
-                                </a>
-                                @if (user != null)
-                                {
-                                    @if (user == "admin@gmail.com")
-                                    {
-                                        <a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-success">
-                                            <i class="fa fa-pen"></i>
-                                        </a>
-                                        <a asp-action="Delete" asp-route-id="@item.ID" class="btn btn-danger">
-                                            <i class="fa fa-trash"></i>
-                                        </a>
-                                    }
-                                }
-                            </td>
-                        </tr>
-                    }*@
-                </tbody>
+                <tbody id="tableBody"></tbody>
             </table>
         </div>
     </div>
