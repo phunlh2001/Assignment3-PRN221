@@ -8,7 +8,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
-using System.Text.Json.Serialization;
 
 namespace Assignment3
 {
@@ -39,9 +38,6 @@ namespace Assignment3
                 options.IdleTimeout = TimeSpan.FromHours(24);
                 options.Cookie.Name = "Assignment3_PRN221";
             });
-
-            services.AddControllers().AddJsonOptions(x =>
-                x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
