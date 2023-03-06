@@ -1,6 +1,8 @@
-﻿using Assignment3.Models;
+﻿using Assignment3.Hubs;
+using Assignment3.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,16 +12,25 @@ namespace Assignment3.Controllers
     public class AppUsersController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IHubContext<SignalrServer> _signalrHub;
 
-        public AppUsersController(ApplicationDbContext context)
+        public AppUsersController(ApplicationDbContext context, IHubContext<SignalrServer> signalrHub)
         {
             _context = context;
+            _signalrHub = signalrHub;
         }
 
         public IActionResult Index()
         {
             var res = _context.AppUsers.ToList();
             return View(res);
+        }
+
+        [HttpGet]
+        public IActionResult GetUsers()
+        {
+            var res = _context.AppUsers.ToList();
+            return Ok(res);
         }
 
         public IActionResult Login() => View();
@@ -55,6 +66,7 @@ namespace Assignment3.Controllers
                 {
                     _context.AppUsers.Add(user);
                     await _context.SaveChangesAsync();
+                    await _signalrHub.Clients.All.SendAsync("LoadUsers");
                     return Redirect("/");
                 }
                 else
