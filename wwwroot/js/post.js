@@ -8,8 +8,6 @@
         LoadData();
     })
 
-    LoadData();
-
     function LoadData() {
         let tr = "";
 
