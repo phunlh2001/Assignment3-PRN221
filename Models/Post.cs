@@ -12,13 +12,7 @@ namespace Assignment3.Models
         public int CategoryID { get; set; }
 
         [Column("created_date")]
-        public string CreatedDate
-        {
-            get
-            {
-                return DateTime.Now.ToString("dd/MM/yyyy");
-            }
-        }
+        public string CreatedDate { get; set; } = DateTime.Now.ToString("dd/MM/yyyy");
         [Column("updated_date")]
         public string UpdatedDate { get; set; } = DateTime.Now.ToString("dd/MM/yyyy");
 
