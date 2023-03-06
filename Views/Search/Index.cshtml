@@ -4,7 +4,7 @@
 
 <label>Search Box:</label>
 <div class="input-group mb-3">
-    <input type="text" class="form-control" placeholder="Input title, description..." />
+    <input type="text" class="form-control" placeholder="Input title of post..." />
     <div class="input-group-append">
         <button class="btn btn-primary" type="button" onclick="handleClick()">
             <i class="fas fa-search"></i>
@@ -12,20 +12,50 @@
     </div>
 </div>
 
+<div id="bodySearch"></div>
+
 @section Scripts {
     <script>
         function handleClick() {
             let value = $("input").val();
-            let tr = ""
+            let html = "";
             $.ajax({
                 type: "POST",
                 url: "/Search/GetData",
                 data: { txt: value },
                 success: (res) => {
                     console.log(res);
+                    html += `<h3 class="display-4">Result for "${value}"</h3>`;
+                    html += `<hr />`;
+                    html += `<table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Title</th>
+                                        <th>Create At</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>`;
+                    html += '<tbody>';
+                    $.each(res, function(k, v) {
+                        html += `<tr>
+                                      <td>${v.title ?? ""}</td>
+                                      <td>${v.createdDate ?? ""}</td>
+
+                                      <td>
+                                          <a href='../Posts/Details?id=${v.id}' class="btn btn-secondary">
+                                               <i class="fa fa-eye"></i>
+                                          </a>
+                                      </td>
+                                  </tr>`;
+                    });
+                    html += '</tbody>';
+                    html += '</table>';
+                    $("#bodySearch").html(html);
                 },
                 error: (err) => {
                     console.log(err)
+                    html += `<h3 class="display-4 text-center">Not found for keyword "${value}"</h3>`;
+                    $("#bodySearch").html(html);
                 }
             })
         }

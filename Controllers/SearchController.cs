@@ -1,7 +1,5 @@
-﻿using Assignment3.Extentions;
-using Assignment3.Models;
+﻿using Assignment3.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 
 namespace Assignment3.Controllers
@@ -23,23 +21,13 @@ namespace Assignment3.Controllers
         [HttpPost]
         public IActionResult GetData(string txt)
         {
-            var post = _context.SearchByText(txt);
+            var post = _context.Posts.Where(p => p.Title.Contains(txt));
 
-            var category = _context.PostCategories
-                .FirstOrDefault(e => e.Description.Contains(txt));
-            var post2 = _context.Posts
-                .Include(p => p.Author)
-                .FirstOrDefault(p => p.PostCategory == category);
-
-            if (post != null)
+            if (post.Count() > 0)
             {
-                return new JsonResult(post);
+                return Ok(post);
             }
-            else if (category != null)
-            {
-                return new JsonResult(post2);
-            }
-            return NoContent();
+            return NotFound();
         }
     }
 }
