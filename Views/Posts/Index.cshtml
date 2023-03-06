@@ -51,13 +51,12 @@
                 <thead class="table-dark">
                     <tr>
                         <th>Title</th>
-                        <th>Content</th>
-                        <th>Category</th>
+                        <th>Create At</th>
                         <th></th>
                     </tr>
                 </thead>
-                <tbody>
-                    @foreach (var item in Model)
+                <tbody id="tableBody">
+                    @*@foreach (var item in Model)
                     {
                         <tr>
                             <td>@item.Title</td>
@@ -81,7 +80,7 @@
                                 }
                             </td>
                         </tr>
-                    }
+                    }*@
                 </tbody>
             </table>
         </div>
