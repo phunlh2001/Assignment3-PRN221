@@ -26,21 +26,21 @@
             <aside>
                 <div class="nav-shopping">
                     <hr style="width:80%;text-align:left;margin-left:0;border-style:dotted;">
-                    <ul>
-                        <li style="list-style-type: none;">
-                            <a asp-controller="Search">Search</a>
-                        </li>
-                    </ul>
+                    <nav>
+                        <a asp-controller="Search">Search</a>
+                    </nav>
                     <hr style="width:75%;text-align:left;margin-left:0;border-style:dotted;" />
                 </div>
                 @if (user != null && user == "admin@gmail.com")
                 {
                     <div class="nav-admin">
-                        <ul>
-                            <li style="list-style-type: none;">
-                                <a asp-controller="AppUsers">Users</a>
-                            </li>
-                        </ul>
+                        <nav>
+                            <a asp-controller="AppUsers">Users</a>
+                        </nav>
+                        <hr style="width:75%;text-align:left;margin-left:0;border-style:dotted;" />
+                        <nav>
+                            <a asp-controller="Reports">Report</a>
+                        </nav>
                         <hr style="width:75%;text-align:left;margin-left:0;border-style:dotted;" />
                     </div>
                 }
