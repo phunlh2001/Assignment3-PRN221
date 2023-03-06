@@ -1,5 +1,4 @@
-﻿using Assignment3.Extentions;
-using Assignment3.Hubs;
+﻿using Assignment3.Hubs;
 using Assignment3.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -27,9 +26,9 @@ namespace Assignment3.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
 
+        [HttpGet]
         public IActionResult GetPosts()
         {
-            // var res = await _context.GetList();
             var res = _context.Posts.ToList();
             return Ok(res);
         }
