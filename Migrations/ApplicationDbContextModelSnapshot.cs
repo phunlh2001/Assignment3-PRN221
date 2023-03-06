@@ -27,15 +27,19 @@ namespace Assignment3.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Address")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FullName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Password")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
@@ -70,6 +74,10 @@ namespace Assignment3.Migrations
                     b.Property<string>("Content")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("CreatedDate")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("created_date");
+
                     b.Property<int?>("PublishStatus")
                         .HasColumnType("int");
 
@@ -95,36 +103,40 @@ namespace Assignment3.Migrations
                             ID = 1,
                             AuthorID = 1,
                             CategoryID = 4,
+                            CreatedDate = "07/03/2023",
                             PublishStatus = 0,
                             Title = "OOP Concepts in C#",
-                            UpdatedDate = "05/03/2023"
+                            UpdatedDate = "07/03/2023"
                         },
                         new
                         {
                             ID = 2,
                             AuthorID = 1,
                             CategoryID = 2,
+                            CreatedDate = "07/03/2023",
                             PublishStatus = 0,
                             Title = "50 Good Dishes For Breakfast",
-                            UpdatedDate = "05/03/2023"
+                            UpdatedDate = "07/03/2023"
                         },
                         new
                         {
                             ID = 3,
                             AuthorID = 1,
                             CategoryID = 3,
+                            CreatedDate = "07/03/2023",
                             PublishStatus = 0,
                             Title = "NASA And The Great Scientific Work",
-                            UpdatedDate = "05/03/2023"
+                            UpdatedDate = "07/03/2023"
                         },
                         new
                         {
                             ID = 4,
                             AuthorID = 1,
                             CategoryID = 1,
+                            CreatedDate = "07/03/2023",
                             PublishStatus = 0,
                             Title = "The Story Of Studying Abroad",
-                            UpdatedDate = "05/03/2023"
+                            UpdatedDate = "07/03/2023"
                         });
                 });
 

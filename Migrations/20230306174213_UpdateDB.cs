@@ -7,12 +7,16 @@ namespace Assignment3.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "created_date",
-                table: "Posts");
-
             migrationBuilder.AlterColumn<string>(
                 name: "updated_date",
+                table: "Posts",
+                type: "nvarchar(max)",
+                nullable: true,
+                oldClrType: typeof(DateTime),
+                oldType: "datetime2");
+
+            migrationBuilder.AlterColumn<string>(
+                name: "created_date",
                 table: "Posts",
                 type: "nvarchar(max)",
                 nullable: true,
@@ -47,6 +51,46 @@ namespace Assignment3.Migrations
                 oldType: "nvarchar(max)",
                 oldNullable: true);
 
+            migrationBuilder.AlterColumn<string>(
+                name: "Password",
+                table: "AppUsers",
+                type: "nvarchar(max)",
+                nullable: false,
+                defaultValue: "",
+                oldClrType: typeof(string),
+                oldType: "nvarchar(max)",
+                oldNullable: true);
+
+            migrationBuilder.AlterColumn<string>(
+                name: "FullName",
+                table: "AppUsers",
+                type: "nvarchar(max)",
+                nullable: false,
+                defaultValue: "",
+                oldClrType: typeof(string),
+                oldType: "nvarchar(max)",
+                oldNullable: true);
+
+            migrationBuilder.AlterColumn<string>(
+                name: "Email",
+                table: "AppUsers",
+                type: "nvarchar(max)",
+                nullable: false,
+                defaultValue: "",
+                oldClrType: typeof(string),
+                oldType: "nvarchar(max)",
+                oldNullable: true);
+
+            migrationBuilder.AlterColumn<string>(
+                name: "Address",
+                table: "AppUsers",
+                type: "nvarchar(max)",
+                nullable: false,
+                defaultValue: "",
+                oldClrType: typeof(string),
+                oldType: "nvarchar(max)",
+                oldNullable: true);
+
             migrationBuilder.InsertData(
                 table: "AppUsers",
                 columns: new[] { "AuthorID", "Address", "Email", "FullName", "Password" },
@@ -65,13 +109,13 @@ namespace Assignment3.Migrations
 
             migrationBuilder.InsertData(
                 table: "Posts",
-                columns: new[] { "PostID", "AuthorID", "CategoryID", "Content", "PublishStatus", "Title", "updated_date" },
+                columns: new[] { "PostID", "AuthorID", "CategoryID", "Content", "created_date", "PublishStatus", "Title", "updated_date" },
                 values: new object[,]
                 {
-                    { 4, 1, 1, null, 0, "The Story Of Studying Abroad", "05/03/2023" },
-                    { 2, 1, 2, null, 0, "50 Good Dishes For Breakfast", "05/03/2023" },
-                    { 3, 1, 3, null, 0, "NASA And The Great Scientific Work", "05/03/2023" },
-                    { 1, 1, 4, null, 0, "OOP Concepts in C#", "05/03/2023" }
+                    { 4, 1, 1, null, "07/03/2023", 0, "The Story Of Studying Abroad", "07/03/2023" },
+                    { 2, 1, 2, null, "07/03/2023", 0, "50 Good Dishes For Breakfast", "07/03/2023" },
+                    { 3, 1, 3, null, "07/03/2023", 0, "NASA And The Great Scientific Work", "07/03/2023" },
+                    { 1, 1, 4, null, "07/03/2023", 0, "OOP Concepts in C#", "07/03/2023" }
                 });
         }
 
@@ -132,6 +176,16 @@ namespace Assignment3.Migrations
                 oldType: "nvarchar(max)",
                 oldNullable: true);
 
+            migrationBuilder.AlterColumn<DateTime>(
+                name: "created_date",
+                table: "Posts",
+                type: "datetime2",
+                nullable: false,
+                defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                oldClrType: typeof(string),
+                oldType: "nvarchar(max)",
+                oldNullable: true);
+
             migrationBuilder.AlterColumn<string>(
                 name: "Title",
                 table: "Posts",
@@ -150,16 +204,41 @@ namespace Assignment3.Migrations
                 oldType: "int",
                 oldNullable: true);
 
-            migrationBuilder.AddColumn<DateTime>(
-                name: "created_date",
-                table: "Posts",
-                type: "datetime2",
-                nullable: false,
-                defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
-
             migrationBuilder.AlterColumn<string>(
                 name: "Description",
                 table: "PostCategories",
+                type: "nvarchar(max)",
+                nullable: true,
+                oldClrType: typeof(string),
+                oldType: "nvarchar(max)");
+
+            migrationBuilder.AlterColumn<string>(
+                name: "Password",
+                table: "AppUsers",
+                type: "nvarchar(max)",
+                nullable: true,
+                oldClrType: typeof(string),
+                oldType: "nvarchar(max)");
+
+            migrationBuilder.AlterColumn<string>(
+                name: "FullName",
+                table: "AppUsers",
+                type: "nvarchar(max)",
+                nullable: true,
+                oldClrType: typeof(string),
+                oldType: "nvarchar(max)");
+
+            migrationBuilder.AlterColumn<string>(
+                name: "Email",
+                table: "AppUsers",
+                type: "nvarchar(max)",
+                nullable: true,
+                oldClrType: typeof(string),
+                oldType: "nvarchar(max)");
+
+            migrationBuilder.AlterColumn<string>(
+                name: "Address",
+                table: "AppUsers",
                 type: "nvarchar(max)",
                 nullable: true,
                 oldClrType: typeof(string),
