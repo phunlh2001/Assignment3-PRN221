@@ -1,0 +1,79 @@
+﻿@{
+    ViewData["Title"] = "Report";
+}
+
+<div class="row">
+    <div class="col-md-2">
+        <div class="form-group">
+            Start Date:
+            <input type="date" class="form-control" id="start"
+                   min="2023-02-20" max="2023-04-30" value="2023-03-01" />
+        </div>
+        <div class="form-group">
+            End Date:
+            <input type="date" class="form-control" id="end"
+                   min="2023-02-20" max="2023-04-30" value="2023-03-10" />
+        </div>
+        <div class="form-group">
+            <input type="button" value="Filter" class="btn btn-outline-primary" />
+        </div>
+    </div>
+    <div class="col-md-10" id="bodyFilter"></div>
+</div>
+
+@section Scripts{
+    <script>
+        $("input[type=button]").click(function() {
+            let start = $("#start").val();
+            let end = $("#end").val();
+            let html = "";
+            // check end date comes before start date
+            if (Date.parse(start) > Date.parse(end)) {
+                $("#bodyFilter")
+                    .html(`<h3 class="display-4 text-center">Filter start date and end date invalid</h3>`);
+            } else {
+                $.ajax({
+                    type: "POST",
+                    url: "/Reports/GetData",
+                    data: {
+                        startDate: start,
+                        endDate: end
+                    },
+                    success: function(res) {
+                        html += `<h2 class="text-normal">Result:</h2>`;
+                        html += `<table class="table table-bordered">
+                                        <thead class="table-dark">
+                                            <tr>
+                                                <th>Title</th>
+                                                <th>Create At</th>
+                                                <th>Modify At</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>`;
+                        html += '<tbody>';
+                        $.each(res, function(k, v) {
+                            html += `<tr>
+                                        <td>${v.title ?? ""}</td>
+                                        <td>${v.createdDate ?? ""}</td>
+                                        <td>${v.updatedDate ?? ""}</td>
+
+                                        <td>
+                                           <a href='../Posts/Details?id=${v.id}' class="btn btn-secondary">
+                                                <i class="fa fa-eye"></i>
+                                           </a>
+                                        </td>
+                                     </tr>`;
+                        });
+                        html += '</tbody>';
+                        html += '</table>';
+                        $("#bodyFilter").html(html);
+                    },
+                    error: function(err) {
+                        $("#bodyFilter")
+                            .html(`<h3 class="display-4 text-center">Not found <b>POST</b> start date at:<br /> ${start}</h3>`);
+                    }
+                });
+            }
+        })
+    </script>
+}
