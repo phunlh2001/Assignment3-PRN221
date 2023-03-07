@@ -23,7 +23,7 @@ namespace Assignment3.Controllers
             var end = DateTime.Parse(endDate).ToString("dd/MM/yyyy");
 
             var post = _context.Posts
-                .Where(p => p.CreatedDate == start || p.UpdatedDate == end);
+                .Where(p => p.CreatedDate.CompareTo(start) > 0 && p.UpdatedDate.CompareTo(end) < 0);
 
             if (post.Count() > 0)
             {
