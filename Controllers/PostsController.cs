@@ -1,5 +1,6 @@
 ﻿using Assignment3.Hubs;
 using Assignment3.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.SignalR;
@@ -56,6 +57,11 @@ namespace Assignment3.Controllers
         // GET: Posts/Create
         public IActionResult Create()
         {
+            var isLogin = HttpContext.Session.GetString("user") != null; // logined
+            if (!isLogin)
+            {
+                return Redirect("/");
+            }
             ViewData["AuthorID"] = new SelectList(_context.AppUsers, "ID", "FullName");
             ViewData["CategoryID"] = new SelectList(_context.PostCategories, "ID", "CategoryName");
             return View();
@@ -83,6 +89,12 @@ namespace Assignment3.Controllers
         // GET: Posts/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            var isLogin = HttpContext.Session.GetString("user") != null; // logined
+            var isAdmin = HttpContext.Session.GetString("userEmail") == "admin@gmail.com";
+            if (!isLogin && !isAdmin)
+            {
+                return Redirect("/");
+            }
             if (id == null)
             {
                 return NotFound();
@@ -139,6 +151,12 @@ namespace Assignment3.Controllers
         // GET: Posts/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            var isLogin = HttpContext.Session.GetString("user") != null; // logined
+            var isAdmin = HttpContext.Session.GetString("userEmail") == "admin@gmail.com";
+            if (!isLogin && !isAdmin)
+            {
+                return Redirect("/");
+            }
             if (id == null)
             {
                 return NotFound();

@@ -1,4 +1,5 @@
 ﻿using Assignment3.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
@@ -14,7 +15,16 @@ namespace Assignment3.Controllers
             _context = context;
         }
 
-        public IActionResult Index() => View();
+        public IActionResult Index()
+        {
+            var isLogin = HttpContext.Session.GetString("user") != null; // logined
+            var isAdmin = HttpContext.Session.GetString("userEmail") == "admin@gmail.com";
+            if (!isLogin && !isAdmin)
+            {
+                return Redirect("/");
+            }
+            return View();
+        }
 
         [HttpPost]
         public IActionResult GetData(string startDate, string endDate)

@@ -22,6 +22,12 @@ namespace Assignment3.Controllers
 
         public IActionResult Index()
         {
+            var isLogin = HttpContext.Session.GetString("user") != null; // logined
+            var isAdmin = HttpContext.Session.GetString("userEmail") == "admin@gmail.com";
+            if (!isLogin && !isAdmin)
+            {
+                return Redirect("/");
+            }
             var res = _context.AppUsers.ToList();
             return View(res);
         }
@@ -83,6 +89,7 @@ namespace Assignment3.Controllers
             HttpContext.Session.Remove("user");
             HttpContext.Session.Remove("userID");
             HttpContext.Session.Remove("userEmail");
+            HttpContext.Session.Clear();
             return Redirect("/");
         }
     }
