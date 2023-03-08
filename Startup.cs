@@ -7,7 +7,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
 
 namespace Assignment3
 {
@@ -35,7 +34,6 @@ namespace Assignment3
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSession(options =>
             {
-                options.IdleTimeout = TimeSpan.FromHours(24);
                 options.Cookie.Name = "Assignment3_PRN221";
             });
         }
